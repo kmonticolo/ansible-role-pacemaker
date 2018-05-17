@@ -1,0 +1,6 @@
+[pacemaker:vars]
+ansible_ssh_user=user
+become=yes
+
+[pacemaker]
+128.168.160.190
