@@ -1,0 +1,42 @@
+---
+# tasks file for pacemaker
+
+- name: check for pacemaker process
+  command: pgrep pacemaker
+
+- name: copy check_pacemaker_actions
+  copy:
+    src: files/check_pacemaker_actions
+    dest: /usr/local/bin/
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+ 
+- name: copy crm_mon_stats.sh
+  copy:
+    src: files/crm_mon_stats.sh
+    dest: /usr/local/bin/
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: copy zabbix-agent-pacemaker.conf
+  copy:
+    src: files/zabbix-agent-pacemaker.conf
+    dest: /etc/zabbix/zabbix_agentd.d/
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart zabbix
+  become: yes
+
+- name: modify sudoers
+  lineinfile:
+    path: /etc/sudoers
+    insertafter: EOF
+    regexp: '^%ADMIN ALL='
+    line: '%zabbix     ALL=(ALL)   NOPASSWD:   /usr/local/bin/crm_mon_stats.sh, /usr/local/bin/check_pacemaker_actions'
+    validate: '/usr/sbin/visudo -cf %s'
+  become: yes

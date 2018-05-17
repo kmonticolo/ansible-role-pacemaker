@@ -1,0 +1,7 @@
+---
+- name: pacemaker
+  hosts: pacemaker
+  gather_facts: false
+
+  roles:
+   - { role: pacemaker, tags: pacemaker }
