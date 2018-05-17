@@ -3,6 +3,7 @@
 
 - name: check for pacemaker process
   command: pgrep pacemaker
+  changed_when: False
 
 - name: copy check_pacemaker_actions
   copy:
