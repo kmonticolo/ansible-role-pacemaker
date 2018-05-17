@@ -36,7 +36,7 @@
   lineinfile:
     path: /etc/sudoers
     insertafter: EOF
-    regexp: '^%ADMIN ALL='
-    line: '%zabbix     ALL=(ALL)   NOPASSWD:   /usr/local/bin/crm_mon_stats.sh, /usr/local/bin/check_pacemaker_actions'
+    regexp: '^%zabbix'
+    line: '%zabbix     ALL=(ALL)   NOPASSWD: /sbin/drbdadm, /usr/local/bin/crm_mon_stats.sh, /usr/local/bin/check_pacemaker_actions'
     validate: '/usr/sbin/visudo -cf %s'
   become: yes
